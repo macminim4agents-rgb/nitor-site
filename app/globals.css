@@ -1,0 +1,1233 @@
+/* ==========================================================================
+   NITOR DIGITAL — design system
+   Paletă & tipografie documentate în brand/IDENTITY.md
+   ========================================================================== */
+
+/* ----- Fonturi (self-hosted, subseturi latin + latin-ext pt. diacritice) -- */
+@font-face {
+  font-family: "Fraunces";
+  src: url("./fonts/fraunces-latin.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Fraunces";
+  src: url("./fonts/fraunces-latin-ext.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/inter-latin.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("./fonts/inter-latin-ext.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Fallback-uri cu metrici ajustate — text vizibil instant, fără salt de layout */
+@font-face {
+  font-family: "Inter Fallback";
+  src: local("Arial");
+  ascent-override: 90.44%;
+  descent-override: 22.52%;
+  line-gap-override: 0%;
+  size-adjust: 107.12%;
+}
+@font-face {
+  font-family: "Fraunces Fallback";
+  src: local("Georgia");
+  ascent-override: 94%;
+  descent-override: 24%;
+  line-gap-override: 0%;
+  size-adjust: 104%;
+}
+
+/* ----- Tokens ------------------------------------------------------------- */
+:root {
+  /* culoare */
+  --paper: #f6f3ec;
+  --paper-2: #efeadf;
+  --ink: #17171c;
+  --ink-2: #4e4e58;
+  --line: rgba(23, 23, 28, 0.14);
+  --line-soft: rgba(23, 23, 28, 0.08);
+  --brass: #a57b2a;        /* decorativ: linii, numerale mari */
+  --brass-text: #7a581c;   /* varianta cu contrast suficient pentru text */
+  --night: #121216;
+  --night-2: #1a1a20;
+  --paper-on-night: #f3efe6;
+  --muted-on-night: #b9b4a6;
+  --line-on-night: rgba(243, 239, 230, 0.16);
+
+  /* tipografie */
+  --font-display: "Fraunces", "Fraunces Fallback", Georgia, serif;
+  --font-text: "Inter", "Inter Fallback", -apple-system, Segoe UI, sans-serif;
+
+  /* dimensiuni */
+  --container: 1160px;
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --radius: 10px;
+  --header-h: 4.25rem;
+
+  /* mișcare */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ----- Reset & bază -------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+html.lenis {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img,
+svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+a {
+  color: inherit;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 520;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.6em;
+  text-wrap: balance;
+}
+h1 {
+  font-size: clamp(2.4rem, 6.2vw, 4.4rem);
+  font-variation-settings: "opsz" 100;
+}
+h2 {
+  font-size: clamp(1.8rem, 4vw, 2.75rem);
+  font-variation-settings: "opsz" 60;
+}
+h3 {
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+p {
+  margin: 0 0 1em;
+}
+::selection {
+  background: var(--brass);
+  color: #fff;
+}
+:focus-visible {
+  outline: 2px solid var(--brass-text);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ----- Utilitare de layout -------------------------------------------------- */
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.section {
+  padding-block: clamp(4rem, 9vw, 7.5rem);
+}
+.section-alt {
+  background: var(--paper-2);
+}
+.section-night {
+  background: var(--night);
+  color: var(--paper-on-night);
+}
+.section-night .eyebrow {
+  color: var(--muted-on-night);
+}
+.section-night .lead {
+  color: var(--muted-on-night);
+}
+.center {
+  text-align: center;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 560;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass-text);
+  margin-bottom: 1.1rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 1.6rem;
+  height: 1px;
+  background: var(--brass);
+  flex: none;
+}
+.center .eyebrow::after {
+  content: "";
+  width: 1.6rem;
+  height: 1px;
+  background: var(--brass);
+  flex: none;
+}
+.lead {
+  font-size: clamp(1.1rem, 1.9vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: 46em;
+  margin-bottom: 1.2em;
+}
+.center .lead {
+  margin-inline: auto;
+}
+.grid {
+  display: grid;
+  gap: 1.25rem;
+}
+@media (min-width: 720px) {
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .cols-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1020px) {
+  .cols-4 { grid-template-columns: repeat(4, 1fr); }
+}
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.6rem 1rem;
+  z-index: 200;
+}
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
+/* ----- Butoane -------------------------------------------------------------- */
+.btn {
+  --btn-bg: var(--ink);
+  --btn-fg: var(--paper);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--ink);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font: 560 0.95rem/1.2 var(--font-text);
+  text-decoration: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 0.35s var(--ease-out), border-color 0.35s var(--ease-out),
+    transform 0.25s var(--ease-out);
+}
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--brass);
+  transform: translateY(101%);
+  transition: transform 0.4s var(--ease-out);
+  z-index: 0;
+}
+.btn > * ,
+.btn {
+  z-index: 1;
+}
+.btn span,
+.btn svg {
+  position: relative;
+  z-index: 1;
+}
+.btn:hover::before,
+.btn:focus-visible::before {
+  transform: translateY(0);
+}
+.btn:hover {
+  border-color: var(--brass);
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(0);
+}
+.btn-ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink);
+  border-color: var(--line);
+}
+.btn-ghost:hover {
+  color: var(--paper);
+}
+.section-night .btn-ghost {
+  --btn-fg: var(--paper-on-night);
+  border-color: var(--line-on-night);
+}
+.btn-light {
+  --btn-bg: var(--paper);
+  --btn-fg: var(--ink);
+  border-color: var(--paper);
+}
+.btn-light:hover {
+  color: var(--paper);
+}
+.btn .arr {
+  transition: transform 0.3s var(--ease-out);
+}
+.btn:hover .arr {
+  transform: translateX(4px);
+}
+
+/* Link cu subliniere care crește */
+.link-line {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.35s var(--ease-out), color 0.2s;
+  padding-bottom: 2px;
+}
+.link-line:hover {
+  background-size: 0% 1px;
+  background-position: 100% 100%;
+  color: var(--brass-text);
+}
+.prose a,
+.consent a,
+.alt-contact a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--brass);
+}
+.prose a:hover {
+  color: var(--brass-text);
+}
+
+/* ----- Header ---------------------------------------------------------------- */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  transition: background 0.3s, box-shadow 0.3s, transform 0.35s var(--ease-out);
+  background: transparent;
+}
+.site-header.scrolled {
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--line-soft);
+}
+.site-header.hidden-up {
+  transform: translateY(-100%);
+}
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: 100%;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.brand-word {
+  font-family: var(--font-display);
+  font-weight: 560;
+  font-size: 1.32rem;
+  letter-spacing: 0.005em;
+}
+.brand-sub {
+  font: 600 0.6rem/1 var(--font-text);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--brass-text);
+  transform: translateY(1px);
+}
+.nav-links {
+  display: none;
+  align-items: center;
+  gap: 1.9rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-links a:not(.btn) {
+  font: 500 0.93rem/1 var(--font-text);
+  color: var(--ink-2);
+  text-decoration: none;
+  padding-bottom: 3px;
+  background-image: linear-gradient(var(--brass), var(--brass));
+  background-size: 0% 1.5px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.3s var(--ease-out), color 0.2s;
+}
+.nav-links a:not(.btn):hover,
+.nav-links a[aria-current="page"] {
+  color: var(--ink);
+  background-size: 100% 1.5px;
+}
+.nav-links .btn {
+  padding: 0.55rem 1.15rem;
+  font-size: 0.88rem;
+}
+@media (min-width: 900px) {
+  .nav-links { display: flex; }
+  .nav-toggle { display: none; }
+}
+.nav-toggle {
+  appearance: none;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font: 560 0.85rem/1 var(--font-text);
+  color: var(--ink);
+  cursor: pointer;
+}
+/* meniul mobil */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--gutter);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+.mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+}
+.mobile-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+.mobile-menu a {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 520;
+  text-decoration: none;
+  color: var(--ink);
+  display: block;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.mobile-menu .btn {
+  margin-top: 1.4rem;
+  font-family: var(--font-text);
+  font-size: 1rem;
+}
+
+/* ----- Hero ------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  padding-top: calc(var(--header-h) + clamp(3rem, 9vh, 6rem));
+  padding-bottom: clamp(3.5rem, 8vw, 6rem);
+  overflow: hidden;
+}
+.hero-glow {
+  position: absolute;
+  inset: -20% -10% auto;
+  height: 130%;
+  pointer-events: none;
+  background:
+    radial-gradient(42% 55% at 72% 18%, rgba(165, 123, 42, 0.16), transparent 70%),
+    radial-gradient(30% 40% at 12% 80%, rgba(165, 123, 42, 0.08), transparent 70%);
+}
+.hero h1 {
+  max-width: 11em;
+  margin-bottom: 0.5em;
+}
+.hero h1 .line {
+  display: block;
+}
+.hero .accent {
+  font-style: italic;
+  font-variation-settings: "opsz" 144;
+  color: var(--brass-text);
+  position: relative;
+  white-space: nowrap;
+}
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1.8rem;
+}
+.hero-rule {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: clamp(2.2rem, 5vw, 3.4rem) 0 1.6rem;
+}
+.trust {
+  display: grid;
+  gap: 1.2rem;
+}
+@media (min-width: 720px) {
+  .trust { grid-template-columns: repeat(3, 1fr); }
+}
+.trust b {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 560;
+  font-size: 1.5rem;
+  margin-bottom: 0.15rem;
+}
+.trust small {
+  color: var(--ink-2);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  display: block;
+  max-width: 26em;
+}
+
+/* ----- Secvența „se construiește singur" (pinned scroll) ----------------------- */
+.assembly {
+  position: relative;
+}
+.assembly-stage {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding-block: 3rem;
+}
+.assembly-grid {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+  width: 100%;
+}
+@media (min-width: 900px) {
+  .assembly-grid { grid-template-columns: 5fr 7fr; gap: 4rem; }
+}
+.assembly-captions {
+  position: relative;
+  min-height: 11em;
+}
+.assembly-caption {
+  position: absolute;
+  inset: 0 auto auto 0;
+  max-width: 24em;
+}
+.assembly-caption h3 {
+  font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  color: var(--paper-on-night);
+}
+.assembly-caption p {
+  color: var(--muted-on-night);
+}
+.assembly-caption .idx {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  color: var(--brass);
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: 0.7rem;
+}
+/* macheta de browser */
+.frame {
+  background: #f9f7f1;
+  color: var(--ink);
+  border-radius: 12px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  transform-origin: center;
+}
+.frame-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--line-soft);
+  background: #efece3;
+}
+.frame-bar i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #d6d1c2;
+}
+.frame-bar .frame-url {
+  margin-left: 0.6rem;
+  flex: 1;
+  height: 18px;
+  border-radius: 9px;
+  background: #e4e0d3;
+  position: relative;
+  overflow: hidden;
+}
+.frame-body {
+  padding: clamp(0.9rem, 1.6vw, 1.3rem);
+  display: grid;
+  gap: 0.7rem;
+}
+.sk {
+  border-radius: 6px;
+  background: #e7e3d6;
+}
+.sk-head {
+  height: clamp(1.4rem, 3vw, 2.1rem);
+  width: 62%;
+  background: #d9d4c3;
+}
+.sk-line {
+  height: 0.65rem;
+}
+.sk-line.w80 { width: 80%; }
+.sk-line.w65 { width: 65%; }
+.sk-line.w45 { width: 45%; }
+.sk-media {
+  height: clamp(4rem, 9vw, 7rem);
+  background: linear-gradient(135deg, #e2ddcd, #d3cdb9);
+  position: relative;
+  overflow: hidden;
+}
+.sk-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.45) 50%, transparent 70%);
+  transform: translateX(-120%);
+}
+.frame.shine .sk-media::after {
+  animation: sheen 1.6s var(--ease-out) 1;
+}
+@keyframes sheen {
+  to { transform: translateX(120%); }
+}
+.sk-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.7rem;
+}
+.sk-card {
+  height: clamp(2.8rem, 6vw, 4.2rem);
+}
+.sk-cta {
+  height: 2.1rem;
+  width: 34%;
+  border-radius: 999px;
+  background: var(--ink);
+}
+.sk-cal {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  padding: 0.6rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 8px;
+  background: #f2efe6;
+}
+.sk-cal i {
+  height: clamp(10px, 1.6vw, 18px);
+  border-radius: 3px;
+  background: #e0dbcb;
+  display: block;
+}
+.sk-cal i.on {
+  background: var(--brass);
+}
+.frame-badge {
+  position: absolute;
+  right: clamp(0.5rem, 2vw, 1.4rem);
+  top: clamp(0.5rem, 2vw, 1.2rem);
+  background: var(--brass);
+  color: #fff;
+  font: 620 0.72rem/1 var(--font-text);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+.assembly-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--brass);
+  width: 0%;
+}
+
+/* ----- Carduri de servicii ------------------------------------------------------ */
+.svc-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.6rem 1.5rem 1.4rem;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out),
+    border-color 0.3s;
+}
+.svc-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--line);
+  box-shadow: 0 18px 40px rgba(23, 23, 28, 0.09);
+}
+.svc-card .num {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  color: var(--brass-text);
+  letter-spacing: 0.06em;
+}
+.svc-card .icon {
+  color: var(--ink);
+  margin-block: 0.2rem 0.1rem;
+}
+.svc-card h3 {
+  margin: 0;
+  font-size: 1.18rem;
+}
+.svc-card p {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 0.94rem;
+  line-height: 1.55;
+  flex: 1;
+}
+.svc-card .go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font: 560 0.88rem/1 var(--font-text);
+  color: var(--brass-text);
+  margin-top: 0.6rem;
+}
+.svc-card .go svg {
+  transition: transform 0.3s var(--ease-out);
+}
+.svc-card:hover .go svg {
+  transform: translateX(5px);
+}
+
+/* ----- Pachete ------------------------------------------------------------------- */
+.pack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1.9rem 1.7rem;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+}
+.pack:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(23, 23, 28, 0.09);
+}
+.pack.featured {
+  background: var(--night);
+  color: var(--paper-on-night);
+  border-color: var(--night);
+}
+.pack.featured .pack-desc {
+  color: var(--muted-on-night);
+}
+.pack .tag {
+  position: absolute;
+  top: -0.8rem;
+  left: 1.6rem;
+  background: var(--brass);
+  color: #fff;
+  font: 620 0.7rem/1 var(--font-text);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.42rem 0.8rem;
+  border-radius: 999px;
+}
+.pack h3 {
+  font-size: 1.45rem;
+  margin-bottom: 0.3rem;
+}
+.pack-desc {
+  color: var(--ink-2);
+  font-size: 0.93rem;
+  margin-bottom: 1.1rem;
+}
+.pack ul {
+  list-style: none;
+  margin: 0 0 1.4rem;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+  flex: 1;
+}
+.pack li {
+  display: flex;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
+.pack li svg {
+  flex: none;
+  margin-top: 0.22rem;
+  color: var(--brass);
+}
+.pack .price {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  color: inherit;
+  margin-bottom: 1rem;
+}
+
+/* ----- Pași (proces) ---------------------------------------------------------------- */
+.steps {
+  display: grid;
+  gap: 0;
+  counter-reset: pas;
+  border-top: 1px solid var(--line);
+}
+.step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.4rem;
+  padding: 1.7rem 0;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+.step::before {
+  counter-increment: pas;
+  content: counter(pas, decimal-leading-zero);
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 400;
+  color: var(--brass);
+  line-height: 1;
+  min-width: 2.4em;
+}
+.step h3 {
+  margin-bottom: 0.35rem;
+}
+.step p {
+  margin: 0;
+  color: var(--ink-2);
+  max-width: 52em;
+}
+.step .badge-dvs {
+  display: inline-block;
+  margin-left: 0.6rem;
+  vertical-align: middle;
+  background: var(--brass);
+  color: #fff;
+  font: 620 0.66rem/1 var(--font-text);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+}
+
+/* ----- Liste „ce primiți", FAQ, casete ------------------------------------------------ */
+.check-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+@media (min-width: 800px) {
+  .check-list.two-col { grid-template-columns: 1fr 1fr; gap: 1rem 2.5rem; }
+}
+.check-list li {
+  display: flex;
+  gap: 0.75rem;
+  line-height: 1.5;
+}
+.check-list svg {
+  flex: none;
+  margin-top: 0.25rem;
+  color: var(--brass);
+}
+.onest {
+  border-left: 3px solid var(--brass);
+  background: var(--paper-2);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 1.4rem 1.6rem;
+  max-width: 54em;
+}
+.onest .onest-label {
+  display: block;
+  font: 620 0.75rem/1 var(--font-text);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass-text);
+  margin-bottom: 0.6rem;
+}
+.onest p {
+  margin: 0;
+  font-size: 1.02rem;
+}
+.section-alt .onest {
+  background: var(--paper);
+}
+.faq {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+  max-width: 54em;
+}
+.faq details {
+  border-bottom: 1px solid var(--line);
+}
+.faq summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.15rem 0;
+  font: 560 1.05rem/1.4 var(--font-text);
+}
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+.faq summary .plus {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  position: relative;
+  color: var(--brass-text);
+  transition: transform 0.3s var(--ease-out);
+}
+.faq details[open] summary .plus {
+  transform: rotate(45deg);
+}
+.faq .faq-a {
+  padding: 0 0 1.25rem;
+  color: var(--ink-2);
+  max-width: 48em;
+}
+
+/* ----- CTA band ------------------------------------------------------------------------- */
+.cta-band {
+  position: relative;
+  overflow: hidden;
+}
+.cta-band h2 {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  max-width: 16em;
+  margin-inline: auto;
+}
+.cta-band .lead {
+  margin-inline: auto;
+}
+.cta-band .hero-ctas {
+  justify-content: center;
+}
+
+/* ----- Formular ---------------------------------------------------------------------------- */
+.contact-form {
+  max-width: 720px;
+  margin-inline: auto;
+  display: grid;
+  gap: 1.1rem;
+}
+.row-2 {
+  display: grid;
+  gap: 1.1rem;
+}
+@media (min-width: 640px) {
+  .row-2 { grid-template-columns: 1fr 1fr; }
+}
+.field label {
+  display: block;
+  font: 560 0.88rem/1 var(--font-text);
+  margin-bottom: 0.45rem;
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  font: 400 1rem/1.4 var(--font-text);
+  color: var(--ink);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field textarea {
+  min-height: 9rem;
+  resize: vertical;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--brass-text);
+  box-shadow: 0 0 0 3px rgba(165, 123, 42, 0.18);
+}
+.consent {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  font-size: 0.92rem;
+  color: var(--ink-2);
+}
+.consent input {
+  margin-top: 0.3rem;
+  accent-color: var(--brass-text);
+}
+.alt-contact {
+  text-align: center;
+  margin-top: 1.6rem;
+  color: var(--ink-2);
+}
+
+/* ----- Cal.com ------------------------------------------------------------------------------ */
+.cal-card {
+  max-width: 760px;
+  margin-inline: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 2.2rem;
+  text-align: center;
+  background: var(--paper);
+}
+#cal-embed {
+  min-height: 560px;
+}
+
+/* ----- WhatsApp flotant ------------------------------------------------------------------------ */
+.wa-float {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 80;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1fa855;
+  color: #fff;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s var(--ease-out);
+}
+.wa-float:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+.wa-float svg {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+/* ----- Footer ------------------------------------------------------------------------------------ */
+.site-footer {
+  background: var(--night);
+  color: var(--muted-on-night);
+  padding-block: clamp(3rem, 6vw, 4.5rem) 2rem;
+  font-size: 0.94rem;
+}
+.footer-grid {
+  display: grid;
+  gap: 2.2rem;
+  padding-bottom: 2.4rem;
+  border-bottom: 1px solid var(--line-on-night);
+}
+@media (min-width: 860px) {
+  .footer-grid { grid-template-columns: 2fr 1fr 1fr; }
+}
+.site-footer .brand {
+  color: var(--paper-on-night);
+  margin-bottom: 0.7rem;
+}
+.site-footer h4 {
+  font: 620 0.78rem/1 var(--font-text);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--paper-on-night);
+  margin-bottom: 0.9rem;
+}
+.site-footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+.site-footer a {
+  color: var(--muted-on-night);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.site-footer a:hover {
+  color: var(--paper-on-night);
+}
+.footer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding-top: 1.6rem;
+  font-size: 0.85rem;
+}
+
+/* ----- Pagini de conținut (GDPR etc.) ----------------------------------------------------------------- */
+.prose {
+  max-width: 46em;
+}
+.prose h2 {
+  font-size: 1.5rem;
+  margin-top: 2.2em;
+}
+.prose ul {
+  padding-left: 1.2em;
+}
+.prose li {
+  margin-bottom: 0.5em;
+}
+.todo {
+  background: #fdf0d2;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+/* ----- Hero-uri interioare ------------------------------------------------------------------------------- */
+.page-hero {
+  padding-top: calc(var(--header-h) + clamp(2.5rem, 7vh, 4.5rem));
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+.breadcrumbs {
+  font-size: 0.85rem;
+  color: var(--ink-2);
+  margin-bottom: 1.2rem;
+}
+.breadcrumbs a {
+  color: inherit;
+  text-decoration: none;
+}
+.breadcrumbs a:hover {
+  color: var(--brass-text);
+}
+.breadcrumbs .sep {
+  margin-inline: 0.5rem;
+  color: var(--brass);
+}
+
+/* ----- Animații de intrare (pagini) — CSS pur, fără JS ---------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .page-enter {
+    animation: pageIn 0.55s var(--ease-out) both;
+  }
+  @keyframes pageIn {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  /* strălucirea „nitor" pe cuvântul accentuat din hero */
+  .lustre {
+    background: linear-gradient(
+      100deg,
+      var(--brass-text) 0%,
+      var(--brass-text) 42%,
+      #d8b56a 50%,
+      var(--brass-text) 58%,
+      var(--brass-text) 100%
+    );
+    background-size: 220% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: lustre 7s ease-in-out infinite;
+  }
+  @keyframes lustre {
+    0%, 55% { background-position: 110% 0; }
+    75%, 100% { background-position: -30% 0; }
+  }
+}
+
+/* Elementele animate cu GSAP primesc stările inițiale DIN JS (gsap.set) —
+   fără JS totul rămâne vizibil. Clasa .gs-will marchează doar intenția. */
+.gs-will {
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
