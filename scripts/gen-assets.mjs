@@ -16,7 +16,7 @@ import sharp from "sharp";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
-const BRAND_MAIN = "Nitor"; // cuvântul mare, în Fraunces
+const BRAND_MAIN = "Qarvenda"; // cuvântul mare, în Fraunces
 const BRAND_SUB = "DIGITAL"; // subtitlul letterspaced, în Inter
 const INK = "#17171c";
 const PAPER = "#f3efe6";
@@ -40,30 +40,51 @@ function textPath(font, text, x, y, fontSize, tracking = 0) {
   return { d: parts.join(" "), width: cursor - x - tracking * fontSize };
 }
 
-/** Semnul „scânteie" (nitor, lat. = strălucire) — patru vârfuri concave.
-    Coeficienții vin din forma originală (Icons.tsx / Gleam), normalizată. */
-function gleamPath(cx, cy, r) {
-  const a = 0.087 * r; // cât de aproape de axă e primul punct de control
-  const b = 0.385 * r; // cât de departe de vârf e curbura
-  const f = (x, y) => `${Math.round(x * 100) / 100} ${Math.round(y * 100) / 100}`;
-  return [
-    `M ${f(cx, cy - r)}`,
-    `C ${f(cx + a, cy - b)} ${f(cx + b, cy - a)} ${f(cx + r, cy)}`,
-    `C ${f(cx + b, cy + a)} ${f(cx + a, cy + b)} ${f(cx, cy + r)}`,
-    `C ${f(cx - a, cy + b)} ${f(cx - b, cy + a)} ${f(cx - r, cy)}`,
-    `C ${f(cx - b, cy - a)} ${f(cx - a, cy - b)} ${f(cx, cy - r)}`,
-    "Z",
-  ].join(" ");
+/**
+ * Semnul casei — cercul închis de coardă. Arcul (300°) = lucrarea dusă de noi
+ * până la capăt; coarda în alamă care închide deschiderea = aprobarea omului,
+ * ultimul segment fără de care cercul nu e cerc.
+ *
+ * Proporțiile sunt normalizate la rază (aceleași ca în components/Icons.tsx,
+ * unde r=7.3 pe grila 24): grosime 0.295r, coarda între 18° și 78°.
+ * Deliberat NU seamănă cu o literă — cuvântul începe deja cu Q.
+ */
+const MARK_A1 = 18;
+const MARK_A2 = 78;
+
+function markGeometry(cx, cy, r) {
+  const v = (n) => Math.round(n * 100) / 100;
+  const at = (deg) => {
+    const t = (deg * Math.PI) / 180;
+    return `${v(cx + r * Math.cos(t))} ${v(cy + r * Math.sin(t))}`;
+  };
+  const p1 = at(MARK_A1);
+  const p2 = at(MARK_A2);
+  return {
+    width: 0.295 * r,
+    // arcul lung (300°), de la capătul de jos al coardei la cel de sus
+    arc: `M ${p2} A ${r} ${r} 0 1 1 ${p1}`,
+    chord: `M ${p1} L ${p2}`,
+  };
 }
 
-/** Lockup-ul complet: [scânteie] Nitor DIGITAL */
+/** Semnul ca grup SVG: arc în `fg`, coarda în `accent`. */
+function markSvg(cx, cy, r, fg, accent) {
+  const m = markGeometry(cx, cy, r);
+  return `<path d="${m.arc}" fill="none" stroke="${fg}" stroke-width="${m.width}" stroke-linecap="round"/>
+  <path d="${m.chord}" fill="none" stroke="${accent}" stroke-width="${m.width}" stroke-linecap="round"/>`;
+}
+
+/** Lockup-ul complet: [semn] Qarvenda DIGITAL */
 function buildLockup(fg, accent) {
   const size = 100;
   const baseline = 100;
-  const gleamR = 34;
-  const gleamCx = gleamR + 4;
-  const gleamCy = baseline - 36; // centrat pe înălțimea literelor mici+
-  const textX = gleamCx + gleamR + 18;
+  const markR = 30;
+  // Semnul e un cerc: bbox-ul lui e ±(r + w/2) = ±1.1475r în ambele axe.
+  const markHalf = 1.1475 * markR;
+  const markCx = markHalf + 4;
+  const markCy = 62; // centrat optic pe corpul cuvântului
+  const textX = markCx + markHalf + 20;
 
   const main = textPath(fraunces, BRAND_MAIN, textX, baseline, size);
   const subSize = 27;
@@ -73,12 +94,13 @@ function buildLockup(fg, accent) {
   const totalW = Math.ceil(textX + main.width + 22 + sub.width + 8);
   const totalH = 132;
 
+  const mark = markSvg(markCx, markCy, markR, fg, accent);
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${totalW} ${totalH}" role="img" aria-label="${BRAND_MAIN} ${BRAND_SUB}">
-  <path d="${gleamPath(gleamCx, gleamCy, gleamR)}" fill="${accent}"/>
+  ${mark}
   <path d="${main.d}" fill="${fg}"/>
   <path d="${sub.d}" fill="${accent}"/>
 </svg>`;
-  return { svg, totalW, totalH, mainD: main.d, subD: sub.d, gleam: gleamPath(gleamCx, gleamCy, gleamR) };
+  return { svg, totalW, totalH, mainD: main.d, subD: sub.d, mark };
 }
 
 mkdirSync(join(root, "brand"), { recursive: true });
@@ -89,9 +111,12 @@ const light = buildLockup(INK, BRASS);
 const dark = buildLockup(PAPER, BRASS_LIGHT);
 writeFileSync(join(root, "brand/logo-light.svg"), light.svg);
 writeFileSync(join(root, "brand/logo-dark.svg"), dark.svg);
+// Inelul (nu coada) dictează bbox-ul: ±(r + w/2) = ±45.9 pentru r=40 → centru 50.
 writeFileSync(
   join(root, "brand/logo-mark.svg"),
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="${gleamPath(50, 50, 46)}" fill="${BRASS}"/></svg>`
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  ${markSvg(50, 50, 40, INK, BRASS)}
+</svg>`
 );
 
 // 2) apple-icon.png din favicon-ul SVG
@@ -130,7 +155,7 @@ await sharp(iconSvg, { density: 300 })
   </radialGradient>
   <rect width="${W}" height="${H}" fill="url(#g)"/>
   <g transform="translate(88,72) scale(${lockScale})">
-    <path d="${lock.gleam}" fill="${BRASS_LIGHT}"/>
+    ${lock.mark}
     <path d="${lock.mainD}" fill="${PAPER}"/>
     <path d="${lock.subD}" fill="${BRASS_LIGHT}"/>
   </g>

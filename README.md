@@ -1,9 +1,15 @@
-# nitor-site — site-ul agenției (Next.js)
+# Site-ul agenției — Qarvenda Digital (Next.js)
 
 Site static (Next.js, `output: "export"`) cu animații GSAP + Lenis.
 **Un singur fișier de configurare:** [`lib/site.ts`](lib/site.ts) — brand,
 Cal.com, WhatsApp, email formular. Conținutul: [`content/ro.ts`](content/ro.ts).
 Identitatea vizuală: [`brand/IDENTITY.md`](brand/IDENTITY.md).
+
+> **Repo-ul se numește încă `nitor-site`** — „Nitor" a fost un brand de lucru
+> respins la verificarea de marcă (D22). Brandul curent, „Qarvenda", a trecut
+> verificarea completă pe 2026-07-14 (D25). Numele repo-ului nu apare nicăieri
+> pe site; redenumirea lui (`gh repo rename qarvenda-site` + directorul local)
+> schimbă URL-ul de staging, deci se face deliberat, nu în treacăt.
 
 ## Comenzi
 
@@ -18,7 +24,7 @@ npm run assets     # regenerează logo/favicon/og.png (după schimbare de brand)
 
 | | Staging (GitHub Pages) | Producție (Vercel + domeniu) |
 |---|---|---|
-| URL | https://macminim4agents-rgb.github.io/nitor-site | https://nitor.ro (după cumpărare) |
+| URL | https://macminim4agents-rgb.github.io/nitor-site | https://qarvenda.ro (după cumpărare) |
 | Build env | `NEXT_PUBLIC_BASE_PATH=/nitor-site`<br>`NEXT_PUBLIC_SITE_URL=<url staging>`<br>`NEXT_PUBLIC_HOSTING="GitHub Pages (GitHub, Inc.)"` | fără variabile (default-uri corecte) |
 | Deploy | `scripts/deploy-staging.sh` | push pe `main` → Vercel |
 

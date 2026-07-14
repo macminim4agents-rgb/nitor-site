@@ -31,11 +31,33 @@ function Svg({
   );
 }
 
-/** Semnul „nitor” — o scânteie cu patru vârfuri (nitor, lat. = strălucire). */
-export function Gleam({ size = 18, className }: P) {
+/**
+ * Semnul casei — cercul închis de coardă.
+ *
+ * Arcul (300°) = lucrarea pe care o ducem noi până la capăt. Coarda în alamă
+ * care îi închide deschiderea = aprobarea omului: ultimul segment, fără care
+ * cercul nu e cerc. „Pregătim noi. Aprobați dumneavoastră." — literal.
+ *
+ * Deliberat NU seamănă cu o literă: cuvântul începe cu Q, iar un semn în formă
+ * de Q lângă el s-ar bâlbâi. Geometria e replicată în `scripts/gen-assets.mjs`
+ * (`markGeometry`) — dacă se schimbă aici, se schimbă și acolo.
+ * Puncte: 18° și 78° pe cercul r=7.3 centrat în (12,12).
+ */
+export function Mark({ size = 18, className }: P) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
-      <path d="M12 1.6 C12.9 8 15.9 11.05 22.4 12 C15.9 12.95 12.9 16 12 22.4 C11.1 16 8.1 12.95 1.6 12 C8.1 11.05 11.1 8 12 1.6 Z" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className}>
+      <path
+        d="M13.52 19.14 A7.3 7.3 0 1 1 18.94 14.26"
+        stroke="currentColor"
+        strokeWidth="2.15"
+        strokeLinecap="round"
+      />
+      <path
+        d="M18.94 14.26 L13.52 19.14"
+        stroke="var(--brass)"
+        strokeWidth="2.15"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }

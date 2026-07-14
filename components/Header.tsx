@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { site } from "@/lib/site";
-import { Gleam } from "./Icons";
+import { Mark } from "./Icons";
 
 const links = [
   { href: "/servicii", label: "Servicii" },
@@ -60,7 +60,7 @@ export default function Header() {
       >
         <div className="container nav">
           <Link className="brand" href="/" aria-label={`${site.brand} — pagina principală`}>
-            <Gleam size={17} className="brand-gleam" />
+            <Mark size={17} className="brand-mark" />
             <span className="brand-word">{site.brandShort}</span>
             <span className="brand-sub">Digital</span>
           </Link>

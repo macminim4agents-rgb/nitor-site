@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { site, anCurent } from "@/lib/site";
 import { servicii } from "@/content/ro";
-import { Gleam } from "./Icons";
+import { Mark } from "./Icons";
 
 export default function Footer() {
   const psi = `https://pagespeed.web.dev/analysis?url=${encodeURIComponent(site.url + "/")}`;
@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="footer-grid">
           <div>
             <span className="brand">
-              <Gleam size={16} />
+              <Mark size={16} />
               <span className="brand-word">{site.brandShort}</span>
               <span className="brand-sub">Digital</span>
             </span>
