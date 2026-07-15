@@ -4,7 +4,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 OWNER="macminim4agents-rgb"
-REPO="nitor-site"
+REPO="qarvenda-site"
 
 export NEXT_PUBLIC_BASE_PATH="/$REPO"
 export NEXT_PUBLIC_SITE_URL="https://$OWNER.github.io/$REPO"

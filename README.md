@@ -24,8 +24,8 @@ npm run assets     # regenerează logo/favicon/og.png (după schimbare de brand)
 
 | | Staging (GitHub Pages) | Producție (Vercel + domeniu) |
 |---|---|---|
-| URL | https://macminim4agents-rgb.github.io/nitor-site | https://qarvenda.ro (după cumpărare) |
-| Build env | `NEXT_PUBLIC_BASE_PATH=/nitor-site`<br>`NEXT_PUBLIC_SITE_URL=<url staging>`<br>`NEXT_PUBLIC_HOSTING="GitHub Pages (GitHub, Inc.)"` | fără variabile (default-uri corecte) |
+| URL | https://macminim4agents-rgb.github.io/qarvenda-site | https://qarvenda.ro (după cumpărare) |
+| Build env | `NEXT_PUBLIC_BASE_PATH=/qarvenda-site`<br>`NEXT_PUBLIC_SITE_URL=<url staging>`<br>`NEXT_PUBLIC_HOSTING="GitHub Pages (GitHub, Inc.)"` | fără variabile (default-uri corecte) |
 | Deploy | `scripts/deploy-staging.sh` | push pe `main` → Vercel |
 
 ## Structura
