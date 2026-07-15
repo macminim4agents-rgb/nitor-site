@@ -8,7 +8,7 @@ import { IconCheck } from "@/components/Icons";
 export const metadata: Metadata = {
   title: "Pachete — Lansare, Lansare + Programări, Prezență continuă",
   description:
-    "Trei pachete clare: Lansare (site complet în 7 zile), Lansare + Programări (site cu programări online) și Prezență continuă (abonament lunar). Preț la ofertă, în apelul de 15 minute.",
+    "Trei pachete clare: Lansare (site complet în 7 zile), Lansare + Programări (site cu programări online) și Prezență continuă (abonament lunar). Preț la ofertă: după apelul de 15 minute primiți o cifră exactă, în aceeași zi lucrătoare.",
   alternates: { canonical: "/pachete/" },
 };
 
@@ -23,10 +23,11 @@ export default function Pachete() {
           </Reveal>
           <Reveal>
             <p className="lead">
-              Prețul exact depinde de specificul firmei — îl aflați în apelul de
-              15 minute, fără nicio obligație. Ce vă putem promite de pe acum:
-              prețul spus la început e prețul de la final, iar tot conținutul e
-              inclus — nu există „extra” pentru texte sau imagini.
+              Prețul exact depinde de specificul firmei — după apelul de 15
+              minute vi-l trimitem în aceeași zi lucrătoare, fără nicio
+              obligație. Ce vă putem promite de pe acum: prețul spus la început
+              e prețul de la final, iar tot conținutul e inclus — nu există
+              „extra” pentru texte sau imagini.
             </p>
           </Reveal>
         </div>
@@ -75,8 +76,11 @@ export default function Pachete() {
                 De ce nu afișăm prețuri? Pentru că un site de 5 pagini pentru un
                 cabinet nu costă cât unul de 15 pagini cu programări pentru o
                 clinică — iar un preț „de la…” care se dublează pe parcurs e
-                exact genul de practică pe care nu o facem. În apel primiți o
-                cifră exactă, care nu se mai mișcă.
+                exact genul de practică pe care nu o facem. Nici în apel nu vă
+                dăm o cifră pe loc, tocmai ca să nu fie una inventată: ne uităm
+                întâi la ce cere efectiv proiectul — câte pagini, ce
+                automatizări, cât consum de AI. După apel primiți o cifră
+                exactă, în aceeași zi lucrătoare, care nu se mai mișcă.
               </p>
             </div>
           </Reveal>
@@ -84,7 +88,7 @@ export default function Pachete() {
       </section>
 
       <CTABand
-        titlu="Aflați prețul exact în 15 minute."
+        titlu="15 minute de apel. Prețul exact, în aceeași zi."
         text="Fără obligații, fără presiune de vânzare. Dacă nu suntem potriviți pentru firma dumneavoastră, v-o spunem noi primii."
       />
     </>

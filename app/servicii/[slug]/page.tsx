@@ -144,7 +144,7 @@ export default async function ServiciuPage({ params }: Params) {
 
       <CTABand
         titlu={`Vreți ${s.nume.toLowerCase()} fără nicio temă de casă?`}
-        text="Programați un apel de 15 minute — vă spunem exact ce am face pentru firma dumneavoastră, în cât timp și cu ce preț."
+        text="Programați un apel de 15 minute — vă spunem exact ce am face pentru firma dumneavoastră și în cât timp. Prețul exact vine după apel, în aceeași zi lucrătoare."
       />
     </>
   );

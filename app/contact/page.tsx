@@ -24,9 +24,9 @@ export default function Contact() {
           <Reveal>
             <p className="lead">
               Ne spuneți ce face firma dumneavoastră; vă spunem exact ce am
-              construi, în cât timp și cu ce preț. Gratuit, fără obligații —
-              folosim exact sistemul de programări pe care îl instalăm
-              clienților noștri.
+              construi și în cât timp. Prețul exact vi-l trimitem după apel, în
+              aceeași zi lucrătoare. Gratuit, fără obligații — folosim exact
+              sistemul de programări pe care îl instalăm clienților noștri.
             </p>
           </Reveal>
         </div>
