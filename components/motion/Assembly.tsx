@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap, prefersReducedMotion } from "./gsap";
+import { loadMotion, prefersReducedMotion } from "./gsap";
 
 const captions = [
   {
@@ -44,10 +44,19 @@ export default function Assembly() {
     if (!el || prefersReducedMotion()) return;
 
     // Secvența pinned rulează doar pe ecrane late; pe mobil secțiunea rămâne
-    // statică (toate elementele vizibile) — sigur și lizibil.
-    const mm = gsap.matchMedia();
-    mm.add("(min-width: 900px)", () => {
-      const ctx = gsap.context(() => {
+    // statică (toate elementele vizibile) — sigur și lizibil. Verificăm ÎNAINTE
+    // de loadMotion: sub 900px nu descărcăm deloc GSAP din acest component
+    // (Assembly e cel mai mare consumator, iar pe mobil n-ar anima nimic).
+    if (!window.matchMedia("(min-width: 900px)").matches) return;
+
+    let cancelled = false;
+    let mm: ReturnType<typeof import("gsap").default.matchMedia> | undefined;
+
+    loadMotion().then(({ gsap }) => {
+      if (cancelled || !ref.current) return;
+      mm = gsap.matchMedia();
+      mm.add("(min-width: 900px)", () => {
+        const ctx = gsap.context(() => {
       el.classList.add("assembly-ready");
       const q = gsap.utils.selector(el);
       const caps = q(".assembly-caption");
@@ -115,15 +124,19 @@ export default function Assembly() {
 
       // bara de progres a secvenței
       tl.to(q(".assembly-progress"), { width: "100%", duration: tl.duration() - 0.001, ease: "none" }, 0);
-      }, el);
+        }, el);
 
-      return () => {
-        ctx.revert();
-        el.classList.remove("assembly-ready");
-      };
+        return () => {
+          ctx.revert();
+          el.classList.remove("assembly-ready");
+        };
+      });
     });
 
-    return () => mm.revert();
+    return () => {
+      cancelled = true;
+      mm?.revert();
+    };
   }, []);
 
   const calCells = Array.from({ length: 21 }, (_, i) => (
