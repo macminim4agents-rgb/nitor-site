@@ -668,6 +668,18 @@ p {
     transition: none;
   }
 }
+/* La tipărire/„salvează ca PDF" nu există scroll, deci IntersectionObserver nu
+   se declanșează niciodată — fără regula asta, secțiunea ar ieși ALBĂ pe hârtie.
+   Prins la auditul din 2026-07-15: captura full-page (care fotografiază dincolo
+   de viewport fără să deruleze) arăta exact aceeași pagină goală. */
+@media print {
+  .assembly-anim .va-aparea,
+  .assembly-anim .frame.va-aparea {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
 .assembly-caption h3 {
   font-size: clamp(1.6rem, 2.6vw, 2.2rem);
   color: var(--paper-on-night);
