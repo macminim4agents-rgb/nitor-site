@@ -441,6 +441,13 @@ p {
   font: 560 0.85rem/1 var(--font-text);
   color: var(--ink);
   cursor: pointer;
+  /* Ținta de deget: era 32 px. E singurul control de navigație pe mobil.
+     NU seta `display` aici: media query-ul de mai SUS (min-width:900px) îl
+     ascunde cu `display:none`, are aceeași specificitate, iar regula asta vine
+     după el — deci orice `display` scris aici ar reapărea butonul pe desktop,
+     lângă meniul normal. Un <button> își centrează oricum textul pe verticală,
+     deci `min-height` e suficient. */
+  min-height: 44px;
 }
 /* meniul mobil */
 .mobile-menu {
@@ -467,7 +474,12 @@ p {
   display: grid;
   gap: 0.4rem;
 }
-.mobile-menu a {
+/* `:not(.btn)` e OBLIGATORIU, nu cosmetic: fără el, regula asta (specificitate
+   0,1,1) bate `.btn` (0,1,0) și îi suprascrie ȘI culoarea, ȘI padding-ul —
+   adică butonul de conversie ajungea cu text ink pe fundal ink (contrast 1.00,
+   invizibil) și 35 px înălțime. Bug real, măsurat la auditul din 2026-07-15;
+   e a doua oară când tiparul ăsta lovește butonul din meniu (vezi Task I). */
+.mobile-menu a:not(.btn) {
   font-family: var(--font-display);
   font-size: 2rem;
   font-weight: 520;
@@ -481,6 +493,7 @@ p {
   margin-top: 1.4rem;
   font-family: var(--font-text);
   font-size: 1rem;
+  min-height: 48px;
 }
 
 /* ----- Hero ------------------------------------------------------------------- */
@@ -565,14 +578,33 @@ p {
 @media (min-width: 900px) {
   .assembly-grid { grid-template-columns: 5fr 7fr; gap: 4rem; }
 }
+/* Legendele secvenței.
+   IMPLICIT = starea SIGURĂ: curg una sub alta, ca o listă de pași. Aici ajung
+   toate cazurile în care secvența pinned NU rulează — fără JS, la
+   prefers-reduced-motion, și pe orice ecran sub 900px. În niciunul dintre ele
+   nu există JS care să le ascundă, deci CSS-ul nu are voie să presupună că
+   vine cineva să facă ordine. (Bug real, prins la auditul responsive din
+   2026-07-15: erau `position: absolute` din start, deci în cele 3 cazuri se
+   tipăreau toate 5 una peste alta — ilizibil.) */
 .assembly-captions {
   position: relative;
-  min-height: 11em;
+  display: grid;
+  gap: 2.2rem;
 }
 .assembly-caption {
+  max-width: 24em;
+}
+
+/* Doar DUPĂ ce Assembly.tsx a pornit secvența: se suprapun în același punct,
+   iar timeline-ul le comută. Clasa se adaugă din JS în aceeași bucată sincronă
+   cu `gsap.set` care ascunde legendele 2-5, deci nu apare nicio sclipire. */
+.assembly-ready .assembly-captions {
+  display: block;
+  min-height: 11em;
+}
+.assembly-ready .assembly-caption {
   position: absolute;
   inset: 0 auto auto 0;
-  max-width: 24em;
 }
 .assembly-caption h3 {
   font-size: clamp(1.6rem, 2.6vw, 2.2rem);
@@ -1035,8 +1067,15 @@ p {
   color: var(--ink-2);
 }
 .consent input {
-  margin-top: 0.3rem;
+  margin-top: 0.15rem;
   accent-color: var(--brass-text);
+  /* Era 13×13 px — sub minimul WCAG 2.2 (24 px). E singura casetă obligatorie
+     din formular; ratată cu degetul = mesaj netrimis. Eticheta întreagă rămâne
+     zonă de click (input-ul e în <label>), dar caseta trebuie să poată fi
+     nimerită și direct. */
+  inline-size: 24px;
+  block-size: 24px;
+  flex: 0 0 auto;
 }
 .alt-contact {
   text-align: center;
