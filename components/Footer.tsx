@@ -12,7 +12,8 @@ export default function Footer() {
           <div>
             <span className="brand">
               <Mark size={16} />
-              <span className="brand-word">{site.brandShort}</span>
+              {/* vezi Header.tsx: `{" "}` ține textContent = „Qarvenda Digital" */}
+              <span className="brand-word">{site.brandShort}</span>{" "}
               <span className="brand-sub">Digital</span>
             </span>
             <p>
@@ -29,7 +30,7 @@ export default function Footer() {
             </p>
           </div>
           <div>
-            <h4>Servicii</h4>
+            <h3>Servicii</h3>
             <ul>
               {servicii.map((s) => (
                 <li key={s.slug}>
@@ -39,7 +40,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4>Companie</h4>
+            <h3>Companie</h3>
             <ul>
               <li>
                 <Link href="/pachete">Pachete</Link>

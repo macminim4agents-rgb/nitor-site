@@ -33,8 +33,12 @@ export default function Pachete() {
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: "1rem" }}>
+      <section className="section" style={{ paddingTop: "1rem" }} aria-labelledby="t-pachete">
         <div className="container">
+          {/* Titlu doar pentru cititoarele de ecran — vezi .doar-citit din CSS. */}
+          <h2 id="t-pachete" className="doar-citit">
+            Cele trei pachete
+          </h2>
           <Reveal className="grid cols-3" effect="children" stagger={0.09}>
             {pachete.map((p) => (
               <div className={`pack ${p.recomandat ? "featured" : ""}`} key={p.nume}>

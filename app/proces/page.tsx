@@ -30,8 +30,12 @@ export default function Proces() {
         </div>
       </section>
 
-      <section className="section section-alt">
+      <section className="section section-alt" aria-labelledby="t-pasi">
         <div className="container">
+          {/* Titlu doar pentru cititoarele de ecran — vezi .doar-citit din CSS. */}
+          <h2 id="t-pasi" className="doar-citit">
+            Pașii, de la primul apel la publicare
+          </h2>
           <Reveal className="steps" effect="children" stagger={0.09}>
             {procesPasi.map((p) => (
               <div className="step" key={p.t}>

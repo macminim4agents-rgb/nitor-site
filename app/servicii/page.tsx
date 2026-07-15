@@ -30,8 +30,12 @@ export default function Servicii() {
           </Reveal>
         </div>
       </section>
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section" style={{ paddingTop: 0 }} aria-labelledby="t-catalog">
         <div className="container">
+          {/* Titlu doar pentru cititoarele de ecran — vezi .doar-citit din CSS. */}
+          <h2 id="t-catalog" className="doar-citit">
+            Catalogul de servicii
+          </h2>
           <Reveal className="grid cols-4" effect="children" stagger={0.06}>
             {servicii.map((s, i) => (
               <ServiceCard key={s.slug} s={s} i={i} />

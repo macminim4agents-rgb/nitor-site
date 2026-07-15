@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "assets": "node scripts/gen-assets.mjs"
+    "assets": "node scripts/gen-assets.mjs",
+    "fonts": "python3 scripts/subset-fonts.py"
   },
   "dependencies": {
     "gsap": "^3.13.0",

@@ -61,7 +61,12 @@ export default function Header() {
         <div className="container nav">
           <Link className="brand" href="/" aria-label={`${site.brand} — pagina principală`}>
             <Mark size={17} className="brand-mark" />
-            <span className="brand-word">{site.brandShort}</span>
+            {/* `{" "}` e necesar, nu cosmetic: JSX înghite spațiul dintre două
+                elemente aflate pe rânduri diferite, deci textContent ieșea
+                „QarvendaDigital". axe compară numele accesibil cu textul vizibil
+                brut, iar „Qarvenda Digital — pagina principală" nu conține
+                „QarvendaDigital" -> Lighthouse semnala nepotrivire. */}
+            <span className="brand-word">{site.brandShort}</span>{" "}
             <span className="brand-sub">Digital</span>
           </Link>
           <nav aria-label="Meniu principal">

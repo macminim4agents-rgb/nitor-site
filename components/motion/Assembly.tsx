@@ -32,8 +32,56 @@ const captions = [
 ];
 
 /**
+ * Efectul pentru MOBIL — nu o portare a celui de desktop, ci unul potrivit:
+ * fiecare legendă și macheta urcă discret și apar când intră în ecran.
+ *
+ * Reguli de siguranță (de-asta arată așa, nu altfel):
+ *  - **Starea implicită din CSS = tot vizibil.** Efectul se activează abia când
+ *    JS pune clasa `assembly-anim` pe secțiune, iar clasa `.va-aparea` pe
+ *    fiecare element. Fără JS, la prefers-reduced-motion, sau dacă
+ *    IntersectionObserver lipsește — nu se pune nimic și totul rămâne vizibil.
+ *    Asta e exact greșeala reparată pe 2026-07-15: înainte, CSS-ul presupunea
+ *    că vine JS să facă ordine, iar când nu venea, textele se suprapuneau.
+ *  - Zero GSAP, zero pinning: doar IntersectionObserver + tranziții CSS.
+ *  - Observer-ul se deconectează după ce fiecare element a apărut o dată
+ *    (`unobserve`), deci nu rămâne nimic care să consume la scroll.
+ *
+ * Întoarce funcția de curățare, ca s-o poată returna useEffect direct.
+ */
+function mobilReveal(el: HTMLElement): (() => void) | undefined {
+  if (typeof IntersectionObserver === "undefined") return;
+
+  const tinte = [...el.querySelectorAll<HTMLElement>(".assembly-caption, .frame")];
+  if (!tinte.length) return;
+
+  // Din acest moment CSS-ul are voie să ascundă — JS e sigur activ.
+  el.classList.add("assembly-anim");
+  tinte.forEach((t) => t.classList.add("va-aparea"));
+
+  const io = new IntersectionObserver(
+    (intrari) => {
+      for (const i of intrari) {
+        if (!i.isIntersecting) continue;
+        i.target.classList.add("aparut");
+        io.unobserve(i.target); // apare o singură dată; nu re-animăm la scroll înapoi
+      }
+    },
+    // pornim puțin înainte să intre complet, ca mișcarea să se termine în ecran
+    { rootMargin: "0px 0px -12% 0px", threshold: 0.15 }
+  );
+  tinte.forEach((t) => io.observe(t));
+
+  return () => {
+    io.disconnect();
+    el.classList.remove("assembly-anim");
+    tinte.forEach((t) => t.classList.remove("va-aparea", "aparut"));
+  };
+}
+
+/**
  * Piesa centrală a paginii de start: la scroll, o machetă de site se
  * construiește singură, pas cu pas, în timp ce legendele povestesc procesul.
+ * Desktop (≥900px): secvență pinned cu GSAP. Mobil: efectul de mai sus.
  * Fără JS sau la prefers-reduced-motion: totul e vizibil, static.
  */
 export default function Assembly() {
@@ -43,11 +91,11 @@ export default function Assembly() {
     const el = ref.current;
     if (!el || prefersReducedMotion()) return;
 
-    // Secvența pinned rulează doar pe ecrane late; pe mobil secțiunea rămâne
-    // statică (toate elementele vizibile) — sigur și lizibil. Verificăm ÎNAINTE
-    // de loadMotion: sub 900px nu descărcăm deloc GSAP din acest component
+    // Secvența pinned rulează doar pe ecrane late. Verificăm ÎNAINTE de
+    // loadMotion: sub 900px nu descărcăm deloc GSAP din acest component
     // (Assembly e cel mai mare consumator, iar pe mobil n-ar anima nimic).
-    if (!window.matchMedia("(min-width: 900px)").matches) return;
+    // Pe mobil pornim în schimb efectul propriu, ieftin — vezi mobilReveal().
+    if (!window.matchMedia("(min-width: 900px)").matches) return mobilReveal(el);
 
     let cancelled = false;
     let mm: ReturnType<typeof import("gsap").default.matchMedia> | undefined;
@@ -144,7 +192,14 @@ export default function Assembly() {
   ));
 
   return (
-    <section className="assembly section-night" ref={ref} aria-label="Cum se construiește un site la noi">
+    <section className="assembly section-night" ref={ref} aria-labelledby="t-assembly">
+      {/* Secțiunea n-are titlu vizibil prin design, dar are nevoie de unul: fără
+          el, legendele h3 veneau direct după h1 (salt de nivel) și secțiunea era
+          fără nume în navigarea pe headinguri. `aria-labelledby` îl refolosește
+          ca etichetă, deci nu dublăm textul. */}
+      <h2 id="t-assembly" className="doar-citit">
+        Cum se construiește un site la noi
+      </h2>
       <div className="assembly-stage">
         <div className="container assembly-grid">
           <div className="assembly-captions">
