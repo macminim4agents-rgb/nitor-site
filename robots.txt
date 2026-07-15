@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://macminim4agents-rgb.github.io/qarvenda-site/sitemap.xml

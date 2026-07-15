@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[22016,["/qarvenda-site/_next/static/chunks/45bnttoxpts2r.js","/qarvenda-site/_next/static/chunks/14mrh2-p_w84d.js"],""]
+3:I[97367,["/qarvenda-site/_next/static/chunks/45bnttoxpts2r.js","/qarvenda-site/_next/static/chunks/14mrh2-p_w84d.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","section",null,{"className":"page-hero center","style":{"minHeight":"60vh"},"children":["$","div",null,{"className":"container","children":[["$","span",null,{"className":"eyebrow","children":"Mesaj trimis"}],["$","h1",null,{"children":"Mulțumim."}],["$","p",null,{"className":"lead","children":"Mesajul dumneavoastră a ajuns la noi. Răspundem în cel mult o zi lucrătoare — de obicei mai repede."}],["$","div",null,{"className":"hero-ctas","style":{"justifyContent":"center"},"children":["$","$L2",null,{"className":"btn","href":"/","children":["$","span",null,{"children":"Înapoi la pagina principală"}]}]}]]}]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"4LGfHaNbZG6ci47LrmJpm"}
+5:null
