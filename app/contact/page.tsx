@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Suspense } from "react";
 import { site } from "@/lib/site";
 import Reveal from "@/components/motion/Reveal";
 import ContactForm from "@/components/ContactForm";
@@ -50,9 +49,7 @@ export default function Contact() {
             </Reveal>
           </div>
           <Reveal>
-            <Suspense fallback={null}>
-              <ContactForm />
-            </Suspense>
+            <ContactForm />
           </Reveal>
           {site.whatsapp && (
             <p className="alt-contact">

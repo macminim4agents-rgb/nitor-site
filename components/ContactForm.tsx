@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
+import { useEffect, useRef } from "react";
 import { site } from "@/lib/site";
 
 const optiuni = [
@@ -15,13 +15,23 @@ const optiuni = [
  * Formularul de contact — FormSubmit livrează mesajul pe email; site-ul
  * rămâne static, fără backend. ?pachet=... preselectează opțiunea
  * (linkurile „Cereți ofertă” din /pachete).
+ *
+ * Preselecția se face în useEffect, NU cu useSearchParams(): într-un export
+ * static acela scoate componenta din prerender, iar formularul dispărea cu
+ * totul din HTML (0 <form>, 0 <input> în out/contact/index.html — măsurat
+ * 2026-07-15). FormSubmit e un POST HTML simplu, deci trebuie să meargă și
+ * cu JS blocat; în plus, formularul care apărea abia la hidratare mișca
+ * pagina sub ochii vizitatorului.
  */
 export default function ContactForm() {
-  const params = useSearchParams();
-  const pachet = params.get("pachet");
-  const preselect = pachet
-    ? optiuni.find((o) => o.toLowerCase().includes(pachet.toLowerCase())) ?? optiuni[0]
-    : optiuni[0];
+  const select = useRef<HTMLSelectElement>(null);
+
+  useEffect(() => {
+    const pachet = new URLSearchParams(window.location.search).get("pachet");
+    if (!pachet || !select.current) return;
+    const gasit = optiuni.find((o) => o.toLowerCase().includes(pachet.toLowerCase()));
+    if (gasit) select.current.value = gasit;
+  }, []);
 
   return (
     <form
@@ -64,7 +74,7 @@ export default function ContactForm() {
       </div>
       <div className="field">
         <label htmlFor="f-pachet">Ce vă interesează?</label>
-        <select id="f-pachet" name="pachet" defaultValue={preselect} key={preselect}>
+        <select id="f-pachet" name="pachet" ref={select} defaultValue={optiuni[0]}>
           {optiuni.map((o) => (
             <option key={o}>{o}</option>
           ))}

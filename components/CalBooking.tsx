@@ -66,8 +66,8 @@ export default function CalBooking() {
           }
           p(cal, ar);
         };
-    })(window, "https://app.cal.com/embed/embed.js", "init");
-    window.Cal("init", { origin: "https://cal.com" });
+    })(window, site.calEmbedScript, "init");
+    window.Cal("init", { origin: site.calOrigin });
     window.Cal("inline", {
       elementOrSelector: "#cal-embed",
       calLink: site.calLink,
