@@ -32,6 +32,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "brand", "fonts-src")
 DST = os.path.join(ROOT, "app", "fonts")
 
+# Gama de greutăți păstrată în axa variabilă `wght`. CSS-ul folosește DOAR
+# 400 (text), 520/560 (titluri) și 700 (<strong>) — măsurat 2026-07-16 cu
+# grep pe app/ + components/; sursele cară 100-900. Restrângerea nu șterge
+# nicio glifă. Axa `opsz` a lui Fraunces rămâne NEatinsă: implicit browserul
+# o leagă de font-size (font-optical-sizing: auto), deci un minim forțat
+# (ex. 60) ar schimba vizibil titlurile mai mici de 60px.
+WGHT = "400:700"
+
 # Glifele din gama latin-ext de care are nevoie româna.
 RO_EXT = [
     (0x0102, "Ă"), (0x0103, "ă"),   # a cu breve
@@ -61,6 +69,12 @@ def subset(nume, args):
         *args,
     ]
     subprocess.run(cmd, check=True, capture_output=True)
+    # Al doilea pas: restrângem axa wght la gama chiar folosită (vezi WGHT).
+    subprocess.run(
+        [sys.executable, "-m", "fontTools.varLib.instancer",
+         dst, f"wght={WGHT}", "-o", dst],
+        check=True, capture_output=True,
+    )
     dupa = kb(dst)
     taiat = inainte - dupa
     print(f"  {nume:<30} {inainte:6.1f} KB -> {dupa:5.1f} KB   (-{taiat:5.1f} KB, -{100*taiat/inainte:4.1f}%)")
