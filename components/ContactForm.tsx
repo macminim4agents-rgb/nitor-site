@@ -36,7 +36,7 @@ export default function ContactForm() {
   return (
     <form
       className="contact-form"
-      action={`https://formsubmit.co/${site.formEmail}`}
+      action={`https://formsubmit.co/${site.formEndpoint}`}
       method="POST"
     >
       {/* setări FormSubmit — nu se văd în pagină */}

@@ -26,12 +26,13 @@ export const site = {
   gazduire: process.env.NEXT_PUBLIC_HOSTING ?? "Vercel Inc.",
 
   /**
-   * Emailul care primește mesajele din formular (FormSubmit).
-   * DE ÎNLOCUIT după activarea FormSubmit cu aliasul lor („el/xxxxx"):
-   * adresa scrisă aici ajunge în bundle-ul public, unde o culeg roboții
-   * de spam; aliasul o ascunde. Vezi site/README.md.
+   * Endpoint-ul FormSubmit care primește mesajele din formular. E aliasul
+   * FormSubmit (string aleatoriu), NU adresa de email — tocmai ca adresa
+   * `contact@qarvenda.ro` să nu ajungă în bundle-ul public, unde o culeg
+   * roboții de spam. Aliasul forwardează la aceeași căsuță și e conceput să
+   * fie public. Obținut din emailul de activare FormSubmit (2026-07-16).
    */
-  formEmail: "contact@qarvenda.ro",
+  formEndpoint: "30179add01709d80fd22a31581e288fd",
 
   /**
    * Contul Cal — DOAR slug-ul, nu URL-ul întreg. Gol = secțiunea de programare
